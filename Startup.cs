@@ -56,6 +56,7 @@ namespace SchoolWeb
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseCors("CorsPolicy");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
