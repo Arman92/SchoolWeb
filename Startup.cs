@@ -27,6 +27,16 @@ namespace SchoolWeb
             {
                 configuration.RootPath = "web/dist";
             });
+
+            // In production, we would like to limit the allowed request, however we just allow all requests for now
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
