@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SchoolWeb.Database;
+using SchoolWeb.Entities;
 
 namespace SchoolWeb
 {
@@ -14,6 +16,17 @@ namespace SchoolWeb
     {
         public static void Main(string[] args)
         {
+            var sessionFactory = DbInitializer.CreateSessionFactory();
+            using (var session = sessionFactory.OpenSession())
+            {
+                using (var tr = session.BeginTransaction())
+                {
+                    var teacher = new Teacher { FirstName = "Arman", LastName = "Safikhani" };
+                    session.Save(teacher);
+                    tr.Commit();
+                }
+            }
+
             CreateWebHostBuilder(args).Build().Run();
         }
 
