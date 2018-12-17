@@ -13,23 +13,23 @@ export class CourseService {
   }
 
   getCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.config.apiEndpoint}/api/Course`);
+    return this.http.get<Course[]>(`${this.config.apiEndpoint}/api/Courses`);
   }
 
   getCourse(id: number): Observable<Course> {
-    return this.http.get<Course>(`${this.config.apiEndpoint}/api/Course/` + id);
+    return this.http.get<Course>(`${this.config.apiEndpoint}/api/Courses/` + id);
   }
 
   deleteCourse(course: Course) {
-    return this.http.delete<Course>(`${this.config.apiEndpoint}/api/Course/` + course.id);
+    return this.http.delete<Course>(`${this.config.apiEndpoint}/api/Courses/` + course.id);
   }
 
   updateCourse(course: Course) {
-    return this.http.put<Course>(`${this.config.apiEndpoint}/api/Course/` + course.id, course);
+    return this.http.put<Course>(`${this.config.apiEndpoint}/api/Courses/` + course.id, course);
   }
 
   addCourse(course: Course) {
-    return this.http.post<Course>(`${this.config.apiEndpoint}/api/Course`, course);
+    return this.http.post<Course>(`${this.config.apiEndpoint}/api/Courses`, course);
   }
 
 }

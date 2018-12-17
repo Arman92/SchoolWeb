@@ -13,23 +13,23 @@ export class StudentService {
   }
 
   getStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>(`${this.config.apiEndpoint}/api/Student`);
+    return this.http.get<Student[]>(`${this.config.apiEndpoint}/api/Students`);
   }
 
   getStudent(id: number): Observable<Student> {
-    return this.http.get<Student>(`${this.config.apiEndpoint}/api/Student/` + id);
+    return this.http.get<Student>(`${this.config.apiEndpoint}/api/Students/` + id);
   }
 
   deleteStudent(student: Student) {
-    return this.http.delete<Student>(`${this.config.apiEndpoint}/api/Student/` + student.id);
+    return this.http.delete<Student>(`${this.config.apiEndpoint}/api/Students/` + student.id);
   }
 
   updateStudent(student: Student) {
-    return this.http.put<Student>(`${this.config.apiEndpoint}/api/Student/` + student.id, student);
+    return this.http.put<Student>(`${this.config.apiEndpoint}/api/Students/` + student.id, student);
   }
 
   addStudent(student: Student) {
-    return this.http.post<Student>(`${this.config.apiEndpoint}/api/Student`, student);
+    return this.http.post<Student>(`${this.config.apiEndpoint}/api/Students`, student);
   }
 
 }

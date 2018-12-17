@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace SchoolWeb.Entities
 {
@@ -12,7 +14,11 @@ namespace SchoolWeb.Entities
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
         public virtual uint Age { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual IList<Course> Courses { get; protected set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual IList<StudentGrade> StudentGrades { get; set; }
 
         public Student()

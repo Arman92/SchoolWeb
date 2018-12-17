@@ -13,23 +13,23 @@ export class TeacherService {
   }
 
   getTeachers(): Observable<Teacher[]> {
-    return this.http.get<Teacher[]>(`${this.config.apiEndpoint}/api/Teacher`);
+    return this.http.get<Teacher[]>(`${this.config.apiEndpoint}/api/Teachers`);
   }
 
   getTeacher(id: number): Observable<Teacher> {
-    return this.http.get<Teacher>(`${this.config.apiEndpoint}/api/Teacher/` + id);
+    return this.http.get<Teacher>(`${this.config.apiEndpoint}/api/Teachers/` + id);
   }
 
   deleteTeacher(teacher: Teacher) {
-    return this.http.delete<Teacher>(`${this.config.apiEndpoint}/api/Teacher/` + teacher.id);
+    return this.http.delete<Teacher>(`${this.config.apiEndpoint}/api/Teachers/` + teacher.id);
   }
 
   updateTeacher(teacher: Teacher) {
-    return this.http.put<Teacher>(`${this.config.apiEndpoint}/api/Teacher/` + teacher.id, teacher);
+    return this.http.put<Teacher>(`${this.config.apiEndpoint}/api/Teachers/` + teacher.id, teacher);
   }
 
   addTeacher(teacher: Teacher) {
-    return this.http.post<Teacher>(`${this.config.apiEndpoint}/api/Teacher`, teacher);
+    return this.http.post<Teacher>(`${this.config.apiEndpoint}/api/Teachers`, teacher);
   }
 
 }

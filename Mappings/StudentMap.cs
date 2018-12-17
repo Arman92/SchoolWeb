@@ -10,8 +10,8 @@ namespace SchoolWeb.Mappings
         public StudentMap()
         {
             Id(x => x.Id);
-            Map(x => x.FirstName);
-            Map(x => x.LastName);
+            Map(x => x.FirstName).Not.Nullable();
+            Map(x => x.LastName).Not.Nullable();
             Map(x => x.Age);
 
             HasManyToMany(x => x.Courses)

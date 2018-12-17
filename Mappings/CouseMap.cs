@@ -10,7 +10,7 @@ namespace SchoolWeb.Mappings
         public CourseMap()
         {
             Id(x => x.Id);
-            Map(x => x.Name);
+            Map(x => x.Name).Not.Nullable();
             References(x => x.Teacher);
 
             HasManyToMany(x => x.Students)
