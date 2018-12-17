@@ -11,10 +11,10 @@ using SchoolWeb.Entities;
 namespace SchoolWeb.Controllers
 {
     [Route("api/[controller]")]
-    public class StudentController : Controller
+    public class TeacherController : Controller
     {
         ISession nhSession;
-        public StudentController(ISession session)
+        public TeacherController(ISession session)
         {
             nhSession = session;
         }
@@ -23,14 +23,14 @@ namespace SchoolWeb.Controllers
         public async Task<IActionResult> Get(int currentPageNo = 1, int pageSize = 20)
         {
             var users = await nhSession
-                .Query<Student>()
+                .Query<Teacher>()
                 .Skip((currentPageNo - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
             if (!users.Any())
             {
-                return NotFound("No student found");
+                return NotFound("No teacher found");
             }
             else
             {
@@ -43,13 +43,13 @@ namespace SchoolWeb.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var user = await nhSession
-                .Query<Student>()
+                .Query<Teacher>()
                 .Where(s => s.Id == id)
                 .SingleOrDefaultAsync();
 
             if (user == null)
             {
-                return NotFound("Student not Found");
+                return NotFound("Teacher not Found");
             }
             else
             {
@@ -59,34 +59,34 @@ namespace SchoolWeb.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Student student)
+        public async Task<IActionResult> Post([FromBody] Teacher teacher)
         {
-            if (!string.IsNullOrEmpty(student.FirstName))
+            if (!string.IsNullOrEmpty(teacher.FirstName))
             {
                 using (var tr = nhSession.BeginTransaction())
                 {
-                    await nhSession.SaveAsync(student);
+                    await nhSession.SaveAsync(teacher);
                     await tr.CommitAsync();
 
-                    return CreatedAtAction("Post", student);
+                    return CreatedAtAction("Post", teacher);
                 }
             }
             else
             {
-                return BadRequest("Students's name was not given");
+                return BadRequest("Teacher's name was not given");
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Student userUpdateValue)
+        public async Task<IActionResult> Put(int id, [FromBody] Teacher userUpdateValue)
         {
-            var studentToEdit = await nhSession.Query<Student>()
+            var studentToEdit = await nhSession.Query<Teacher>()
                                     .Where(s => s.Id == id)
                                     .SingleOrDefaultAsync();
 
             if (studentToEdit == null)
             {
-                return NotFound("Could not update student as it was not Found");
+                return NotFound("Could not update teacher as it was not Found");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace SchoolWeb.Controllers
                     await nhSession.SaveOrUpdateAsync(userUpdateValue);
                     await tr.CommitAsync();
 
-                    return Json("Updated student");
+                    return Json("Updated teacher");
                 }
             }
         }
@@ -104,13 +104,13 @@ namespace SchoolWeb.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var studentToDelete = await nhSession.Query<Student>()
+            var studentToDelete = await nhSession.Query<Teacher>()
                                     .Where(s => s.Id == id)
                                     .SingleOrDefaultAsync();
 
             if (studentToDelete == null)
             {
-                return NotFound("Could not delete student as it was not Found");
+                return NotFound("Could not delete teacher as it was not Found");
             }
             else
             {
@@ -119,7 +119,7 @@ namespace SchoolWeb.Controllers
                     await nhSession.DeleteAsync(studentToDelete);
                     await tr.CommitAsync();
 
-                    return Json("Deleted student");
+                    return Json("Deleted teacher");
                 }
             }
         }

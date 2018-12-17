@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NHibernate;
+using SchoolWeb.Database;
 
 namespace SchoolWeb
 {
@@ -36,6 +38,11 @@ namespace SchoolWeb
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
+            });
+
+            services.AddScoped<ISession>((provider) =>
+            {
+                return DbInitializer.SessionFactory.OpenSession();
             });
         }
 
