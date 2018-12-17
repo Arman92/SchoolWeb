@@ -2,7 +2,7 @@ import { Teacher } from './teacher';
 import { Student } from './student';
 
 
-export interface Class {
+export interface Course {
     id: number;
     name: string;
     location: string;

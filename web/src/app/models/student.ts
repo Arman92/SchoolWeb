@@ -1,9 +1,9 @@
-import { Class } from './class';
+import { Course } from './course';
 
 export interface Student {
     id: number;
     firstName: string;
     lastName: string;
     age: number;
-    classes: Class[];
+    courses: Course[];
 }

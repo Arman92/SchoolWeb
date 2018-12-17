@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ClassListComponent } from './components/class-list/class-list/class-list.component';
+import { CourseListComponent } from './components/course-list/course-list.component';
 
 const routes: Routes = [
-  {path: 'class-list', component: ClassListComponent},
+  { path: 'course-list', component: CourseListComponent },
   {
     path: '',
-    redirectTo: '/class-list',
+    redirectTo: '/course-list',
     pathMatch: 'full'
   }
 ];

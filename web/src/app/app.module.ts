@@ -6,28 +6,37 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ClassListComponent } from './components/class-list/class-list/class-list.component';
+import { CourseListComponent } from './components/course-list/course-list.component';
 import { AppConfigModule } from './config/app-config.module';
+import { StudentService } from './services/student.service';
+import { CourseService } from './services/course.service';
+import { TeacherService } from './services/teacher.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ClassListComponent
+    CourseListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule, // new modules added here
+    BrowserAnimationsModule,
     MatToolbarModule,
     MatCardModule,
-    AppConfigModule
+    MatListModule,
+    MatTableModule,
+    AppConfigModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [StudentService, CourseService, TeacherService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
