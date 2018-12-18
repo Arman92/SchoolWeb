@@ -22,11 +22,11 @@ export class CourseAddComponent implements OnInit {
   teachers: Teacher[];
   nameFormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(3),
+    Validators.minLength(5),
   ]);
   locationFormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(3),
+    Validators.minLength(5),
   ]);
   teacherFormControl = new FormControl('', [
     Validators.required,
@@ -59,12 +59,14 @@ export class CourseAddComponent implements OnInit {
 
   createCourse() {
     this.hasError = null;
+    alert('this.teacherFormControl.value ' + this.teacherFormControl.value);
 
     const course: Course = {
       id: 0,
       location: this.locationFormControl.value,
       name: this.nameFormControl.value,
-      teacher: { id: this.teacherFormControl.value, firstName: '', lastName: '' }
+      teacher: { id: this.teacherFormControl.value, firstName: '', lastName: '' },
+      students: []
     };
 
     this.courseService.addCourse(course).subscribe(result => {
@@ -80,8 +82,8 @@ export class CourseAddComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.teacherService.getTeachers().subscribe(result => {
-        this.teachers = result;
+      this.teacherService.getTeachers().subscribe(res => {
+        this.teachers = res;
       }, err => {
         console.log('Got an error getting teachers', err);
       });

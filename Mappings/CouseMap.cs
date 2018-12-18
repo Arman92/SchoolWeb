@@ -21,8 +21,6 @@ namespace SchoolWeb.Mappings
             HasMany(x => x.StudentGrades)
                 .Cascade.All()
                 .Inverse();
-
-
         }
 
     }

@@ -1,6 +1,9 @@
 <div class="row">
 
   <mat-card class="col-md-12">
+    <mat-card-title>Courses List</mat-card-title>
+    <mat-card-subtitle>Below is a list of registered courses, click on each course to show the students that are
+      enrolled in.</mat-card-subtitle>
     <div class="row">
       <div class="col-md-11">
         <table mat-table [dataSource]="courses" class="mat-elevation-z1" *ngIf="(courses && courses.length > 0); else noCourses">
@@ -26,7 +29,7 @@
           <!-- teacher Column -->
           <ng-container matColumnDef="teacher">
             <th mat-header-cell *matHeaderCellDef> Teacher </th>
-            <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.teacher.firstName}} {{element.teacher.lastName}} </td>
           </ng-container>
 
           <!-- actions Column -->

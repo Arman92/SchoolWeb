@@ -11,6 +11,9 @@
         <mat-error *ngIf="firstNameFormControl.hasError('required')">
           First Name is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="firstNameFormControl.hasError('minlength')">
+          Too Short (Min 5 chars)
+        </mat-error>
       </mat-form-field>
 
     </mat-card-content>

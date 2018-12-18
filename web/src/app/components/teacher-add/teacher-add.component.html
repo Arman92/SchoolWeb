@@ -10,12 +10,18 @@
         <mat-error *ngIf="firstNameFormControl.hasError('required')">
           First Name is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="firstNameFormControl.hasError('minlength')">
+          Too Short (Min 5 chars)
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Last Name" [formControl]="lastNameFormControl" [errorStateMatcher]="matcher" />
         <mat-hint>Last Name</mat-hint>
         <mat-error *ngIf="lastNameFormControl.hasError('required')">
           Last Name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="lastNameFormControl.hasError('minlength')">
+          Too Short (Min 5 chars)
         </mat-error>
       </mat-form-field>
     </div>

@@ -11,6 +11,20 @@
           <mat-error *ngIf="nameFormControl.hasError('required')">
             Course Name is <strong>required</strong>
           </mat-error>
+          <mat-error *ngIf="nameFormControl.hasError('minlength')">
+            Too Short (Min 5 chars)
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Location" [formControl]="locationFormControl" [errorStateMatcher]="matcher" />
+          <mat-hint>Location that course is held at</mat-hint>
+          <mat-error *ngIf="locationFormControl.hasError('required')">
+            Location is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="locationFormControl.hasError('minlength')">
+            Too Short (Min 5 chars)
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>

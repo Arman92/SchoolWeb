@@ -57,10 +57,20 @@ namespace SchoolWeb.Controllers
             {
                 using (var tr = nhSession.BeginTransaction())
                 {
-                    await nhSession.SaveAsync(course);
-                    await tr.CommitAsync();
+                    var teacher = await nhSession.GetAsync<Teacher>(course.Teacher.Id);
+                    if (teacher != null)
+                    {
+                        course.Teacher = teacher;
+                        await nhSession.SaveAsync(course);
+                        await tr.CommitAsync();
 
-                    return CreatedAtAction("Post", course);
+                        return CreatedAtAction("Post", course);
+                    }
+                    else
+                    {
+                        return BadRequest("Teacher not found");
+                    }
+
                 }
             }
             else

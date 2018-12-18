@@ -5,9 +5,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace SchoolWeb.Entities
 {
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class Student
     {
         public virtual int Id { get; protected set; }

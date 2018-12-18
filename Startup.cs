@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
 using SchoolWeb.Database;
+using SchoolWeb.Helper;
 
 namespace SchoolWeb
 {
@@ -25,8 +26,13 @@ namespace SchoolWeb
             services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
             .AddJsonOptions(
-                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.ContractResolver = new NHibernateContractResolver();
+                }
             );
+
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -62,6 +68,8 @@ namespace SchoolWeb
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+
 
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();

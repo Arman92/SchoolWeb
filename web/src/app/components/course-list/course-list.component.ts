@@ -17,6 +17,10 @@ export class CourseListComponent implements OnInit {
   constructor(private courseService: CourseService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.loadCourses();
+  }
+
+  loadCourses() {
     this.courseService.getCourses().subscribe(result => {
       console.log('getCourses:', result);
       this.courses = result;
@@ -35,7 +39,7 @@ export class CourseListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.loadCourses();
     });
   }
 
