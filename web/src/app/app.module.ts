@@ -4,11 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import {
-  MatCardModule, MatListModule, MatTableModule, MatButtonModule,
-  MatButtonToggleModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher
-} from '@angular/material';
 
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -22,6 +17,8 @@ import { StudentListComponent } from './components/student-list/student-list.com
 import { StudentAddComponent } from './components/student-add/student-add.component';
 import { CourseAddComponent } from './components/course-add/course-add.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DemoMaterialModule } from './common/material.module';
+import { TeacherAddComponent } from './components/teacher-add/teacher-add.component';
 
 @NgModule({
   declarations: [
@@ -31,18 +28,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CourseListComponent,
     StudentListComponent,
     StudentAddComponent,
-    CourseAddComponent
+    CourseAddComponent,
+    TeacherAddComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatListModule,
-    MatTableModule,
-    MatButtonModule,
-    MatButtonToggleModule,
+    DemoMaterialModule,
     AppConfigModule,
     HttpClientModule,
     FormsModule,
@@ -51,10 +44,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   providers: [
     StudentService,
     CourseService,
-    TeacherService,
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+    TeacherService
   ],
-  entryComponents: [StudentAddComponent],
+  entryComponents: [StudentAddComponent, CourseAddComponent, TeacherAddComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

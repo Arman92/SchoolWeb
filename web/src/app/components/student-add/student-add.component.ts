@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material';
+import { DefaultErrorStateMatcher } from 'src/app/common/error-state-matcher';
 
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+
 
 @Component({
   selector: 'app-student-add',
@@ -18,10 +12,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class StudentAddComponent implements OnInit {
   firstNameFormControl = new FormControl('', [
     Validators.required,
-    Validators.email,
+    Validators.minLength(3),
   ]);
 
-  matcher = new MyErrorStateMatcher();
+  matcher = new DefaultErrorStateMatcher();
 
 
   constructor() { }

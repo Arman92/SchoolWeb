@@ -1,3 +1,58 @@
-<p>
-  course-add works!
-</p>
+<h1 mat-dialog-title>Add a Course</h1>
+
+<div *ngIf="teachers && teachers.length > 0 ; else noTeachers">
+  <div mat-dialog-content>
+
+    <form>
+      <div class="form-container">
+        <mat-form-field>
+          <input matInput placeholder="Course Name" [formControl]="nameFormControl" [errorStateMatcher]="matcher" />
+          <mat-hint>Course Name</mat-hint>
+          <mat-error *ngIf="nameFormControl.hasError('required')">
+            Course Name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Teacher" [formControl]="teacherFormControl">
+            <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+              {{teacher.firstName}} {{teacher.lastName}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="teacherFormControl.hasError('required')">
+            You should choose a <strong>teacher</strong>!
+          </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="hasError">
+          <span class="error">Something happened while trying to add the record, please try again.</span>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <div mat-dialog-actions>
+    <div class="row">
+      <div class="col-md-11">
+        <button mat-raised-button [color]="'accent'" (click)="createCourse()" cdkFocusInitial>CREATE</button>
+        <button mat-raised-button [color]="'primary'" (click)="closeDialog()">CLOSE</button>
+      </div>
+      <div class="col-md-1">
+        <button mat-raised-button [color]="'accent'" (click)="showAddTeacherDialog()">ADD TEACHER</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noTeachers>
+  <div mat-dialog-content>
+    <span class="no-teacher-found">No <strong>Teacher</strong> Found!</span>
+    <br />
+    <p>Please first add a teacher, then try again for adding a course.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [color]="'accent'" (click)="showAddTeacherDialog()" cdkFocusInitial>Add Teacher</button>
+    <button mat-raised-button [color]="'primary'" (click)="closeDialog()">CLOSE</button>
+  </div>
+</ng-template>

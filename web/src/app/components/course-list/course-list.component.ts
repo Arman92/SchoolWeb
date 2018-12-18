@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/models/course';
+import { MatDialog } from '@angular/material';
+import { CourseAddComponent } from '../course-add/course-add.component';
 
 @Component({
   selector: 'app-course-list',
@@ -12,7 +14,7 @@ export class CourseListComponent implements OnInit {
   courses: Course[];
   selectedCourse: Course;
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.courseService.getCourses().subscribe(result => {
@@ -25,6 +27,16 @@ export class CourseListComponent implements OnInit {
   onCourseRowClicked(row) {
     alert(row);
     this.selectedCourse = row as Course;
+  }
+
+  addNewCourse() {
+    const dialogRef = this.dialog.open(CourseAddComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

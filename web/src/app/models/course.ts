@@ -7,5 +7,4 @@ export interface Course {
     name: string;
     location: string;
     teacher: Teacher;
-    students: Student[];
 }
