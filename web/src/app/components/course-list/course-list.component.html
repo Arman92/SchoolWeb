@@ -1,35 +1,73 @@
 <div class="row">
 
-  <mat-card class="col-md-6">
-    <table mat-table [dataSource]="courses" class="mat-elevation-z8">
+  <mat-card class="col-md-12">
+    <div class="row">
+      <div class="col-md-11">
+        <table mat-table [dataSource]="courses" class="mat-elevation-z1" *ngIf="(courses && courses.length > 0); else noCourses">
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Location </th>
-        <td mat-cell *matCellDef="let element"> {{element.location}} </td>
-      </ng-container>
+          <!-- location Column -->
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef> Location </th>
+            <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+          </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Teacher </th>
-        <td mat-cell *matCellDef="let element"> {{element.teacher.firstName}} </td>
-      </ng-container>
+          <!-- teacher Column -->
+          <ng-container matColumnDef="teacher">
+            <th mat-header-cell *matHeaderCellDef> Teacher </th>
+            <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+          </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+          <!-- actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button><i class="material-icons">edit</i></button>
+              <button mat-icon-button><i class="material-icons">delete</i></button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCourseRowClicked(row)"></tr>
+        </table>
+
+        <ng-template #noCourses>
+          <span class="no-course-found">No Cources found!</span>
+        </ng-template>
+      </div>
+
+      <div class="col-md-1">
+        <button mat-mini-fab class="btn-add"><i class="material-icons">add</i></button>
+      </div>
+    </div>
+
   </mat-card>
+</div>
 
+
+<div class="row">
+
+  <mat-card class="col-md-12 student-details-card">
+    <div class="row">
+      <div class="col-md-11">
+        <app-student-list [course]="selectedCourse"></app-student-list>
+      </div>
+
+      <div class="col-md-1">
+        <button mat-mini-fab class="btn-add"><i class="material-icons">add</i></button>
+      </div>
+    </div>
+
+  </mat-card>
 </div>

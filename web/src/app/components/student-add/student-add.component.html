@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-title>Add a Student</mat-card-title>
+  <mat-card-subtitle>Use this form to add a student to the selected course!</mat-card-subtitle>
+
+
+  <form>
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput placeholder="First Name" [formControl]="firstNameFormControl" [errorStateMatcher]="matcher" />
+        <mat-hint>Teacher's First Name</mat-hint>
+        <mat-error *ngIf="firstNameFormControl.hasError('required')">
+          First Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+
+    </mat-card-actions>
+  </form>
+</mat-card>

@@ -8,7 +8,9 @@ import { Course } from 'src/app/models/course';
   styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent implements OnInit {
+  displayedColumns: string[] = ['position', 'name', 'location', 'teacher', 'actions'];
   courses: Course[];
+  selectedCourse: Course;
 
   constructor(private courseService: CourseService) { }
 
@@ -17,6 +19,12 @@ export class CourseListComponent implements OnInit {
       console.log('getCourses:', result);
       this.courses = result;
     });
+  }
+
+
+  onCourseRowClicked(row) {
+    alert(row);
+    this.selectedCourse = row as Course;
   }
 
 }

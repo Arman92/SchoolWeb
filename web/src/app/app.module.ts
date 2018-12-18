@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatTableModule } from '@angular/material/table';
+import {
+  MatCardModule, MatListModule, MatTableModule, MatButtonModule,
+  MatButtonToggleModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher
+} from '@angular/material';
 
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -17,13 +18,20 @@ import { StudentService } from './services/student.service';
 import { CourseService } from './services/course.service';
 import { TeacherService } from './services/teacher.service';
 import { HttpClientModule } from '@angular/common/http';
+import { StudentListComponent } from './components/student-list/student-list.component';
+import { StudentAddComponent } from './components/student-add/student-add.component';
+import { CourseAddComponent } from './components/course-add/course-add.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    CourseListComponent
+    CourseListComponent,
+    StudentListComponent,
+    StudentAddComponent,
+    CourseAddComponent
   ],
   imports: [
     BrowserModule,
@@ -33,10 +41,20 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MatListModule,
     MatTableModule,
+    MatButtonModule,
+    MatButtonToggleModule,
     AppConfigModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [StudentService, CourseService, TeacherService],
+  providers: [
+    StudentService,
+    CourseService,
+    TeacherService,
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+  ],
+  entryComponents: [StudentAddComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
