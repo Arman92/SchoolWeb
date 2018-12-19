@@ -40,11 +40,11 @@ export class StudentGradeAddComponent implements OnInit {
     private studentGradeService: StudentGradeService,
     public dialog: MatDialog) {
 
-    this.courseFormControl = new FormControl(data.course ? data.course.id : '', [
+    this.courseFormControl = new FormControl(data.course ? { value: data.course.id, disabled: true } : '', [
       Validators.required,
     ]);
 
-    this.studentFormControl = new FormControl(data.student ? data.student.id : '', [
+    this.studentFormControl = new FormControl(data.student ? { value: data.student.id, disabled: true } : '', [
       Validators.required,
     ]);
 
@@ -75,10 +75,22 @@ export class StudentGradeAddComponent implements OnInit {
 
   createStudentGrade() {
     this.hasError = null;
+    let course: Course;
+    let student: Student;
+    this.courses.forEach(element => {
+      if (element.id === this.courseFormControl.value) {
+        course = element;
+      }
+    });
+    this.students.forEach(element => {
+      if (element.id === this.studentFormControl.value) {
+        student = element;
+      }
+    });
 
     const studentGrade: StudentGrade = {
-      course: this.studentFormControl.value,
-      student: this.courseFormControl.value,
+      course: course,
+      student: student,
       grade: this.gradeFormControl.value,
     };
 
@@ -89,16 +101,29 @@ export class StudentGradeAddComponent implements OnInit {
     });
   }
 
-  editStudent() {
+  editStudentGrade() {
     this.hasError = null;
-    console.log('this.gradeFormControl.value ', this.gradeFormControl.value, 3);
+    let course: Course;
+    let student: Student;
+    this.courses.forEach(element => {
+      if (element.id === this.courseFormControl.value) {
+        course = element;
+      }
+    });
+    this.students.forEach(element => {
+      if (element.id === this.studentFormControl.value) {
+        student = element;
+      }
+    });
+
 
     const studentGrade: StudentGrade = {
       grade: this.gradeFormControl.value,
-      course: this.courseFormControl.value,
-      student: this.studentFormControl.value
+      course: course,
+      student: student
     };
 
+    console.log('updateStudentGrade', studentGrade);
     this.studentGradeService.updateStudentGrade(studentGrade).subscribe(result => {
       this.dialogRef.close();
     }, err => {

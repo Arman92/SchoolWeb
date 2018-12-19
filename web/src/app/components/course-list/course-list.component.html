@@ -66,7 +66,7 @@
     <mat-card-title *ngIf="selectedCourse">Students enrolled in course <strong>{{selectedCourse.name}}</strong></mat-card-title>
     <div class="row">
       <div class="col-md-11">
-        <app-student-grade-list *ngIf="selectedCourse; else courseNotSelected" [course]="selectedCourse"></app-student-grade-list>
+        <app-student-grade-list #studentsListC *ngIf="selectedCourse; else courseNotSelected" [course]="selectedCourse"></app-student-grade-list>
 
         <ng-template #courseNotSelected>
           <span class="no-course-found">Click on a course to see the students enrolled in.</span>
@@ -88,7 +88,7 @@
     <mat-card-title>All Students</mat-card-title>
     <div class="row">
       <div class="col-md-11">
-        <app-student-list #studentsListC></app-student-list>
+        <app-student-list></app-student-list>
       </div>
 
       <div class="col-md-1">

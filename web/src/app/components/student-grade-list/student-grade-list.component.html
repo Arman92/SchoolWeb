@@ -1,41 +1,41 @@
-<table mat-table [dataSource]="studentGrades" class="mat-elevation-z1" *ngIf="(students && students.length > 0); else noStudents">
+<table mat-table [dataSource]="studentGrades" class="mat-elevation-z1" *ngIf="(studentGrades && studentGrades.length > 0); else noStudents">
 
   <!-- Position Column -->
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef> ID </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.student.id}} </td>
   </ng-container>
 
   <!-- Name Column -->
   <ng-container matColumnDef="firstName">
     <th mat-header-cell *matHeaderCellDef> First Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.student.firstName}} </td>
   </ng-container>
 
   <!-- location Column -->
   <ng-container matColumnDef="lastName">
     <th mat-header-cell *matHeaderCellDef> Location </th>
-    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.student.lastName}} </td>
   </ng-container>
 
   <!-- teacher Column -->
   <ng-container matColumnDef="age">
     <th mat-header-cell *matHeaderCellDef> Age </th>
-    <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.student.age}} </td>
   </ng-container>
 
   <!-- grade Column -->
   <ng-container matColumnDef="grade">
     <th mat-header-cell *matHeaderCellDef> Grade </th>
-    <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.grade}} </td>
   </ng-container>
 
   <!-- actions Column -->
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button (click)="editCourse(element)"><i class="material-icons">edit</i></button>
-      <button mat-icon-button (click)="deleteCourse(element)"><i class="material-icons">delete</i></button>
+      <button mat-icon-button (click)="editStudentGrade(element)"><i class="material-icons">edit</i></button>
+      <button mat-icon-button (click)="deleteStudentGrade(element)"><i class="material-icons">delete</i></button>
     </td>
   </ng-container>
 

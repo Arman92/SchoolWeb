@@ -45,33 +45,29 @@ namespace SchoolWeb.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] StudentGrade studentGrade)
+        [Route("{courseId}/{studentId}")]
+        public async Task<IActionResult> Post(int courseId, int studentId, [FromBody] float grade)
         {
-            if (studentGrade.Course != null && studentGrade.Course.Id != 0)
+            using (var tr = nhSession.BeginTransaction())
             {
-                using (var tr = nhSession.BeginTransaction())
+                var course = await nhSession.GetAsync<Course>(courseId);
+                var student = await nhSession.GetAsync<Student>(studentId);
+                if (course != null && student != null)
                 {
-                    var course = await nhSession.GetAsync<Course>(studentGrade.Course.Id);
-                    var student = await nhSession.GetAsync<Student>(studentGrade.Student.Id);
-                    if (course != null && student != null)
-                    {
-                        studentGrade.Course = course;
-                        studentGrade.Student = student;
-                        await nhSession.SaveAsync(studentGrade);
-                        await tr.CommitAsync();
+                    var studentGrade = new StudentGrade();
+                    studentGrade.Course = course;
+                    studentGrade.Student = student;
+                    studentGrade.Grade = grade;
+                    await nhSession.SaveAsync(studentGrade);
+                    await tr.CommitAsync();
 
-                        return CreatedAtAction("Post", studentGrade);
-                    }
-                    else
-                    {
-                        return BadRequest("Either Course or Student does not exist");
-                    }
-
+                    return CreatedAtAction("Post", studentGrade);
                 }
-            }
-            else
-            {
-                return BadRequest("Studentgrade is empty");
+                else
+                {
+                    return BadRequest("Either Course or Student does not exist");
+                }
+
             }
         }
 

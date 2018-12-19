@@ -5,8 +5,8 @@ import { MatDialog } from '@angular/material';
 import { CourseAddComponent } from '../course-add/course-add.component';
 import { YesNoDialogComponent } from 'src/app/common/yes-no-dialog/yes-no-dialog.component';
 import { StudentAddComponent } from '../student-add/student-add.component';
-import { StudentListComponent } from '../student-list/student-list.component';
 import { StudentGradeAddComponent } from '../student-grade-add/student-grade-add.component';
+import { StudentGradeListComponent } from '../student-grade-list/student-grade-list.component';
 
 @Component({
   selector: 'app-course-list',
@@ -18,7 +18,7 @@ export class CourseListComponent implements OnInit {
   courses: Course[];
   selectedCourse: Course;
   selectedRowIndex: number;
-  @ViewChild('studentsListC') studentListC: StudentListComponent;
+  @ViewChild('studentsListC') studentListC: StudentGradeListComponent;
 
 
   constructor(private courseService: CourseService, public dialog: MatDialog) { }
@@ -87,7 +87,6 @@ export class CourseListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.studentListC.loadStudents();
     });
   }
 
@@ -98,7 +97,7 @@ export class CourseListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.studentListC.loadStudents();
+      this.studentListC.loadStudentGrades();
     });
   }
 

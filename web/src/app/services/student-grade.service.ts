@@ -40,7 +40,8 @@ export class StudentGradeService {
     }
 
     addStudentGrade(student: StudentGrade) {
-        return this.http.post<StudentGrade>(`${this.config.apiEndpoint}/api/StudentGrades`, student)
+        return this.http.post<StudentGrade>(`${this.config.apiEndpoint}/api/StudentGrades/` +
+            student.course.id + '/' + student.student.id, student.grade)
             .pipe(catchError(this.handleError));
     }
 

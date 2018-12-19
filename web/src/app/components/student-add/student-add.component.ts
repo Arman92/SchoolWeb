@@ -32,12 +32,12 @@ export class StudentAddComponent implements OnInit {
 
     this.firstNameFormControl = new FormControl(data.student ? data.student.firstName : '', [
       Validators.required,
-      Validators.minLength(5),
+      Validators.minLength(3),
     ]);
 
     this.lastNameFormControl = new FormControl(data.student ? data.student.lastName : '', [
       Validators.required,
-      Validators.minLength(5),
+      Validators.minLength(3),
     ]);
 
     this.ageFormControl = new FormControl(data.student ? data.student.age : '', [
