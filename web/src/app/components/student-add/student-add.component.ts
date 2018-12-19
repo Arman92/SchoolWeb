@@ -75,7 +75,7 @@ export class StudentAddComponent implements OnInit {
     });
   }
 
-  editCourse() {
+  editStudent() {
     this.hasError = null;
     console.log('this.ageFormControl.value ', this.ageFormControl.value, 3);
 

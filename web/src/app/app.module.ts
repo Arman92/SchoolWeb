@@ -20,6 +20,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DemoMaterialModule } from './common/material.module';
 import { TeacherAddComponent } from './components/teacher-add/teacher-add.component';
 import { YesNoDialogComponent } from './common/yes-no-dialog/yes-no-dialog.component';
+import { StudentGradeService } from './services/student-grade.service';
+import { StudentGradeListComponent } from './components/student-grade-list/student-grade-list.component';
+import { StudentGradeAddComponent } from './components/student-grade-add/student-grade-add.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { YesNoDialogComponent } from './common/yes-no-dialog/yes-no-dialog.compo
     FooterComponent,
     CourseListComponent,
     StudentListComponent,
+    StudentGradeListComponent,
     StudentAddComponent,
+    StudentGradeAddComponent,
     CourseAddComponent,
     TeacherAddComponent,
     YesNoDialogComponent
@@ -45,10 +50,12 @@ import { YesNoDialogComponent } from './common/yes-no-dialog/yes-no-dialog.compo
   ],
   providers: [
     StudentService,
+    StudentGradeService,
     CourseService,
-    TeacherService
+    TeacherService,
+    StudentGradeService
   ],
-  entryComponents: [StudentAddComponent, CourseAddComponent, TeacherAddComponent, YesNoDialogComponent],
+  entryComponents: [StudentAddComponent, StudentGradeAddComponent, CourseAddComponent, TeacherAddComponent, YesNoDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

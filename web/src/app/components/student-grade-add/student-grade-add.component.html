@@ -1,0 +1,54 @@
+<h1 mat-dialog-title *ngIf="!data.student">Add a Student Grade</h1>
+<h1 mat-dialog-title *ngIf="data.student">Edit Student Grade of <strong>{{data.student.firstName}}
+    {{data.student.lastName}}</strong></h1>
+
+<div mat-dialog-content>
+
+  <form [formGroup]="studentGradeForm">
+    <div class="form-container">
+      <mat-form-field>
+        <mat-select placeholder="Course" [formControl]="courseFormControl">
+          <mat-option *ngFor="let course of courses" [value]="course">
+            {{course.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="courseFormControl.hasError('required')">
+          You should choose a <strong>course</strong>!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Student" [formControl]="studentFormControl">
+          <mat-option *ngFor="let student of students" [value]="student">
+            {{student.firstName}} {{student.lastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="studentFormControl.hasError('required')">
+          You should choose a <strong>student</strong>!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="number" placeholder="Grade" [formControl]="gradeFormControl" [errorStateMatcher]="matcher" />
+        <mat-hint>Grade</mat-hint>
+        <mat-error *ngIf="gradeFormControl.hasError('required')">
+          Grade is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+      <div *ngIf="hasError">
+        <span class="error">Something happened while trying to add the record, please try again.</span>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button *ngIf="!data.student" (click)="createStudentGrade()" [disabled]="studentGradeForm.invalid"
+    cdkFocusInitial>CREATE</button>
+  <button mat-button *ngIf="data.student" (click)="editStudentGrade()" [disabled]="studentGradeForm.invalid"
+    cdkFocusInitial>EDIT</button>
+  <button mat-button (click)="closeDialog()">CLOSE</button>
+</div>

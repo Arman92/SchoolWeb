@@ -71,7 +71,6 @@ export class CourseAddComponent implements OnInit {
 
   createCourse() {
     this.hasError = null;
-    console.log('this.teacherFormControl.value ', this.teacherFormControl.value, 3);
 
     const course: Course = {
       id: 0,

@@ -11,10 +11,10 @@ using SchoolWeb.Entities;
 namespace SchoolWeb.Controllers
 {
     [Route("api/[controller]")]
-    public class StudentGradeController : Controller
+    public class StudentGradesController : Controller
     {
         ISession nhSession;
-        public StudentGradeController(ISession session)
+        public StudentGradesController(ISession session)
         {
             nhSession = session;
         }
@@ -51,10 +51,22 @@ namespace SchoolWeb.Controllers
             {
                 using (var tr = nhSession.BeginTransaction())
                 {
-                    await nhSession.SaveAsync(studentGrade);
-                    await tr.CommitAsync();
+                    var course = await nhSession.GetAsync<Course>(studentGrade.Course.Id);
+                    var student = await nhSession.GetAsync<Student>(studentGrade.Student.Id);
+                    if (course != null && student != null)
+                    {
+                        studentGrade.Course = course;
+                        studentGrade.Student = student;
+                        await nhSession.SaveAsync(studentGrade);
+                        await tr.CommitAsync();
 
-                    return CreatedAtAction("Post", studentGrade);
+                        return CreatedAtAction("Post", studentGrade);
+                    }
+                    else
+                    {
+                        return BadRequest("Either Course or Student does not exist");
+                    }
+
                 }
             }
             else

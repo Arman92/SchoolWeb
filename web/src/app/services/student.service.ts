@@ -17,10 +17,6 @@ export class StudentService {
     return this.http.get<Student[]>(`${this.config.apiEndpoint}/api/Students`).pipe(catchError(this.handleError));
   }
 
-  getStudentsOfCourse(courseId: number): Observable<Student[]> {
-    return this.http.get<Student[]>(`${this.config.apiEndpoint}/api/Students/GetByCourse/` + courseId).pipe(catchError(this.handleError));
-  }
-
   getStudent(id: number): Observable<Student> {
     return this.http.get<Student>(`${this.config.apiEndpoint}/api/Students/` + id).pipe(catchError(this.handleError));
   }

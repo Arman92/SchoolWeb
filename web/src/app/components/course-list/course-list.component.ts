@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/models/course';
 import { MatDialog } from '@angular/material';
 import { CourseAddComponent } from '../course-add/course-add.component';
 import { YesNoDialogComponent } from 'src/app/common/yes-no-dialog/yes-no-dialog.component';
 import { StudentAddComponent } from '../student-add/student-add.component';
+import { StudentListComponent } from '../student-list/student-list.component';
+import { StudentGradeAddComponent } from '../student-grade-add/student-grade-add.component';
 
 @Component({
   selector: 'app-course-list',
@@ -16,6 +18,8 @@ export class CourseListComponent implements OnInit {
   courses: Course[];
   selectedCourse: Course;
   selectedRowIndex: number;
+  @ViewChild('studentsListC') studentListC: StudentListComponent;
+
 
   constructor(private courseService: CourseService, public dialog: MatDialog) { }
 
@@ -82,10 +86,19 @@ export class CourseListComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((result) => {
+      this.studentListC.loadStudents();
+    });
+  }
 
-      }
+  createStudentGrade(course: Course) {
+    const dialogRef = this.dialog.open(StudentGradeAddComponent, {
+      width: '500px',
+      data: { course: course }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.studentListC.loadStudents();
     });
   }
 
