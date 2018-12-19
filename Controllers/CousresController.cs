@@ -79,14 +79,46 @@ namespace SchoolWeb.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("AddStudentGrade/{courseId}/{studentId}")]
+        public async Task<IActionResult> AddStudentGrade(int courseId, int studentId, float grade = 0)
+        {
+            var course = await nhSession.GetAsync<Course>(courseId);
+            var student = await nhSession.GetAsync<Student>(studentId);
+
+            if (course != null && student != null)
+            {
+                return BadRequest("Could not find Course or Student");
+            }
+            else
+            {
+                using (var tr = nhSession.BeginTransaction())
+                {
+                    var studentGrade = new StudentGrade
+                    {
+                        Course = course,
+                        Student = student,
+                        Grade = grade
+                    };
+                    await nhSession.SaveAsync(studentGrade);
+                    await tr.CommitAsync();
+
+                    return Ok(studentGrade);
+                }
+            }
+
+        }
+
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Course courseUpdateValue)
         {
-            var studentToEdit = await nhSession.Query<Course>()
+            var courseToEdit = await nhSession.Query<Course>()
                                     .Where(s => s.Id == id)
                                     .SingleOrDefaultAsync();
 
-            if (studentToEdit == null)
+            if (courseToEdit == null)
             {
                 return NotFound("Could not update course as it was not Found");
             }
@@ -94,7 +126,11 @@ namespace SchoolWeb.Controllers
             {
                 using (var tr = nhSession.BeginTransaction())
                 {
-                    await nhSession.SaveOrUpdateAsync(courseUpdateValue);
+                    courseToEdit.Name = courseUpdateValue.Name;
+                    courseToEdit.Location = courseUpdateValue.Location;
+                    courseToEdit.Teacher = await nhSession.GetAsync<Teacher>(courseUpdateValue.Teacher.Id);
+
+                    await nhSession.SaveOrUpdateAsync(courseToEdit);
                     await tr.CommitAsync();
 
                     return Json("Updated course");

@@ -14,10 +14,6 @@ namespace SchoolWeb.Mappings
             Map(x => x.LastName).Not.Nullable();
             Map(x => x.Age);
 
-            HasManyToMany(x => x.Courses)
-                 .Cascade.All()
-                 .Table("StudentClass");
-
             HasMany(x => x.StudentGrades)
                 .Cascade.All()
                 .Inverse();

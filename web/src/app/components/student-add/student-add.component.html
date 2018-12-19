@@ -1,13 +1,13 @@
-<mat-card>
-  <mat-card-title>Add a Student</mat-card-title>
-  <mat-card-subtitle>Use this form to add a student to the selected course!</mat-card-subtitle>
+<h1 mat-dialog-title *ngIf="!data.student">Add a Student</h1>
+<h1 mat-dialog-title *ngIf="data.student">Edit Student <strong>{{data.student.firstName}} {{data.student.lastName}}</strong></h1>
 
+<div mat-dialog-content>
 
-  <form>
-    <mat-card-content>
+  <form [formGroup]="studentForm">
+    <div class="form-container">
       <mat-form-field>
         <input matInput placeholder="First Name" [formControl]="firstNameFormControl" [errorStateMatcher]="matcher" />
-        <mat-hint>Teacher's First Name</mat-hint>
+        <mat-hint>First Name</mat-hint>
         <mat-error *ngIf="firstNameFormControl.hasError('required')">
           First Name is <strong>required</strong>
         </mat-error>
@@ -16,10 +16,36 @@
         </mat-error>
       </mat-form-field>
 
-    </mat-card-content>
+      <mat-form-field>
+        <input matInput placeholder="Last Name" [formControl]="lastNameFormControl" [errorStateMatcher]="matcher" />
+        <mat-hint>Last Name</mat-hint>
+        <mat-error *ngIf="lastNameFormControl.hasError('required')">
+          Last Name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="lastNameFormControl.hasError('minlength')">
+          Too Short (Min 5 chars)
+        </mat-error>
+      </mat-form-field>
 
-    <mat-card-actions>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Age" [formControl]="ageFormControl" [errorStateMatcher]="matcher" />
+        <mat-hint>Age</mat-hint>
+        <mat-error *ngIf="ageFormControl.hasError('required')">
+          Age is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
-    </mat-card-actions>
+
+      <div *ngIf="hasError">
+        <span class="error">Something happened while trying to add the record, please try again.</span>
+      </div>
+
+    </div>
   </form>
-</mat-card>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button *ngIf="!data.student" (click)="createStudent()" [disabled]="studentForm.invalid" cdkFocusInitial>CREATE</button>
+  <button mat-button *ngIf="data.student" (click)="editStudent()" [disabled]="studentForm.invalid" cdkFocusInitial>EDIT</button>
+  <button mat-button (click)="closeDialog()">CLOSE</button>
+</div>

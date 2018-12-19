@@ -40,6 +40,7 @@ import {
     MatTooltipModule,
     MatTreeModule,
 } from '@angular/material';
+import { YesNoDialogComponent } from './yes-no-dialog/yes-no-dialog.component';
 
 @NgModule({
     exports: [
@@ -82,7 +83,8 @@ import {
         MatTooltipModule,
         MatTreeModule,
         ScrollingModule,
-    ]
+    ],
+    declarations: []
 })
 export class DemoMaterialModule { }
 

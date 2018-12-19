@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { DefaultErrorStateMatcher } from 'src/app/common/error-state-matcher';
 import { TeacherService } from 'src/app/services/teacher.service';
 import { Teacher } from 'src/app/models/teacher';
@@ -9,8 +9,7 @@ import { Course } from 'src/app/models/course';
 import { CourseService } from 'src/app/services/course.service';
 
 export interface DialogData {
-  animal: string;
-  name: string;
+  course: Course;
 }
 
 @Component({
@@ -20,17 +19,10 @@ export interface DialogData {
 })
 export class CourseAddComponent implements OnInit {
   teachers: Teacher[];
-  nameFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(5),
-  ]);
-  locationFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(5),
-  ]);
-  teacherFormControl = new FormControl('', [
-    Validators.required,
-  ]);
+  courseForm: FormGroup;
+  nameFormControl: FormControl;
+  locationFormControl: FormControl;
+  teacherFormControl: FormControl;
 
 
   matcher = new DefaultErrorStateMatcher();
@@ -42,6 +34,26 @@ export class CourseAddComponent implements OnInit {
     private teacherService: TeacherService,
     private courseService: CourseService,
     public dialog: MatDialog) {
+
+    this.nameFormControl = new FormControl(data.course ? data.course.name : '', [
+      Validators.required,
+      Validators.minLength(5),
+    ]);
+
+    this.locationFormControl = new FormControl(data.course ? data.course.location : '', [
+      Validators.required,
+      Validators.minLength(5),
+    ]);
+
+    this.teacherFormControl = new FormControl(data.course ? data.course.teacher.id : '', [
+      Validators.required,
+    ]);
+
+    this.courseForm = new FormGroup({
+      name: this.nameFormControl,
+      location: this.locationFormControl,
+      teacher: this.teacherFormControl,
+    });
 
   }
 
@@ -59,7 +71,7 @@ export class CourseAddComponent implements OnInit {
 
   createCourse() {
     this.hasError = null;
-    alert('this.teacherFormControl.value ' + this.teacherFormControl.value);
+    console.log('this.teacherFormControl.value ', this.teacherFormControl.value, 3);
 
     const course: Course = {
       id: 0,
@@ -70,6 +82,21 @@ export class CourseAddComponent implements OnInit {
     };
 
     this.courseService.addCourse(course).subscribe(result => {
+      this.dialogRef.close();
+    }, err => {
+      this.hasError = err;
+    });
+  }
+
+  editCourse() {
+    this.hasError = null;
+    console.log('this.teacherFormControl.value ', this.teacherFormControl.value, 3);
+
+    this.data.course.name = this.nameFormControl.value;
+    this.data.course.location = this.locationFormControl.value;
+    this.data.course.teacher.id = this.teacherFormControl.value;
+
+    this.courseService.updateCourse(this.data.course).subscribe(result => {
       this.dialogRef.close();
     }, err => {
       this.hasError = err;

@@ -11,10 +11,10 @@ using SchoolWeb.Entities;
 namespace SchoolWeb.Controllers
 {
     [Route("api/[controller]")]
-    public class StudentsController : Controller
+    public class StudentGradeController : Controller
     {
         ISession nhSession;
-        public StudentsController(ISession session)
+        public StudentGradeController(ISession session)
         {
             nhSession = session;
         }
@@ -23,7 +23,7 @@ namespace SchoolWeb.Controllers
         public async Task<IActionResult> Get(int currentPageNo = 1, int pageSize = 20)
         {
             var students = await nhSession
-                .Query<Student>()
+                .Query<StudentGrade>()
                 .Skip((currentPageNo - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -31,52 +31,46 @@ namespace SchoolWeb.Controllers
             return Ok(students);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet]
+        [Route("GetByCourse/{courseId}")]
+        public async Task<IActionResult> GetByCourse(int courseId)
         {
-            var student = await nhSession
-                .Query<Student>()
-                .Where(s => s.Id == id)
-                .SingleOrDefaultAsync();
+            var studentGrades = await nhSession
+            .Query<StudentGrade>()
+            .Where(c => c.Course.Id == courseId)
+            .ToListAsync();
 
-            if (student == null)
-            {
-                return NoContent(); // Returns a 204 No Content response
-            }
-            else
-            {
-                return Json(student);
-            }
+            return Ok(studentGrades);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Student student)
+        public async Task<IActionResult> Post([FromBody] StudentGrade studentGrade)
         {
-            if (!string.IsNullOrEmpty(student.FirstName))
+            if (studentGrade.Course != null && studentGrade.Course.Id != 0)
             {
                 using (var tr = nhSession.BeginTransaction())
                 {
-                    await nhSession.SaveAsync(student);
+                    await nhSession.SaveAsync(studentGrade);
                     await tr.CommitAsync();
 
-                    return CreatedAtAction("Post", student);
+                    return CreatedAtAction("Post", studentGrade);
                 }
             }
             else
             {
-                return BadRequest("Students's name was not given");
+                return BadRequest("Studentgrade is empty");
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Student studentUpdateValue)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] StudentGrade studentGradeUpdate)
         {
-            var studentToEdit = await nhSession.Query<Student>()
-                                    .Where(s => s.Id == id)
+            var studentGradeToEdit = await nhSession.Query<StudentGrade>()
+                                    .Where(s => s.Course.Id == studentGradeUpdate.Course.Id && s.Student.Id == studentGradeUpdate.Student.Id)
                                     .SingleOrDefaultAsync();
 
-            if (studentToEdit == null)
+            if (studentGradeToEdit == null)
             {
                 return NotFound("Could not update student as it was not Found");
             }
@@ -84,11 +78,9 @@ namespace SchoolWeb.Controllers
             {
                 using (var tr = nhSession.BeginTransaction())
                 {
-                    studentToEdit.FirstName = studentUpdateValue.FirstName;
-                    studentToEdit.LastName = studentUpdateValue.LastName;
-                    studentToEdit.Age = studentUpdateValue.Age;
+                    studentGradeToEdit.Grade = studentGradeUpdate.Grade;
 
-                    await nhSession.SaveOrUpdateAsync(studentToEdit);
+                    await nhSession.SaveOrUpdateAsync(studentGradeToEdit);
                     await tr.CommitAsync();
 
                     return Json("Updated student");
@@ -97,11 +89,12 @@ namespace SchoolWeb.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete()]
+        [Route("GetByCourse/{courseId}/{studentId}")]
+        public async Task<IActionResult> Delete(int courseId, int studentId)
         {
-            var studentToDelete = await nhSession.Query<Student>()
-                                    .Where(s => s.Id == id)
+            var studentToDelete = await nhSession.Query<StudentGrade>()
+                                    .Where(s => s.Course.Id == courseId && s.Student.Id == studentId)
                                     .SingleOrDefaultAsync();
 
             if (studentToDelete == null)

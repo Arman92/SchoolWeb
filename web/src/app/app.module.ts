@@ -19,6 +19,7 @@ import { CourseAddComponent } from './components/course-add/course-add.component
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DemoMaterialModule } from './common/material.module';
 import { TeacherAddComponent } from './components/teacher-add/teacher-add.component';
+import { YesNoDialogComponent } from './common/yes-no-dialog/yes-no-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TeacherAddComponent } from './components/teacher-add/teacher-add.compon
     StudentListComponent,
     StudentAddComponent,
     CourseAddComponent,
-    TeacherAddComponent
+    TeacherAddComponent,
+    YesNoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,7 @@ import { TeacherAddComponent } from './components/teacher-add/teacher-add.compon
     CourseService,
     TeacherService
   ],
-  entryComponents: [StudentAddComponent, CourseAddComponent, TeacherAddComponent],
+  entryComponents: [StudentAddComponent, CourseAddComponent, TeacherAddComponent, YesNoDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

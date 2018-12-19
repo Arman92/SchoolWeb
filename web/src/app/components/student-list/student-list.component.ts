@@ -9,13 +9,17 @@ import { Student } from 'src/app/models/student';
   styleUrls: ['./student-list.component.scss']
 })
 export class StudentListComponent implements OnInit {
+  displayedColumns: string[] = ['position', 'firstName', 'lastName', 'age', 'actions'];
   private _course: Course;
   students: Student[];
 
   constructor(private studentService: StudentService) { }
 
   ngOnInit() {
-
+    this.studentService.getStudents().subscribe(result => {
+      console.log('getStudentsOfCourse:', result);
+      this.students = result;
+    });
   }
 
   get course(): Course {

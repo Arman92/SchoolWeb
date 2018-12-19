@@ -1,9 +1,10 @@
-<h1 mat-dialog-title>Add a Course</h1>
+<h1 mat-dialog-title *ngIf="!data.course">Add a Course</h1>
+<h1 mat-dialog-title *ngIf="data.course">Edit Course <strong>{{data.course.name}}</strong></h1>
 
 <div *ngIf="teachers && teachers.length > 0 ; else noTeachers">
   <div mat-dialog-content>
 
-    <form>
+    <form [formGroup]="courseForm">
       <div class="form-container">
         <mat-form-field>
           <input matInput placeholder="Course Name" [formControl]="nameFormControl" [errorStateMatcher]="matcher" />
@@ -48,12 +49,14 @@
 
   <div mat-dialog-actions>
     <div class="row">
-      <div class="col-md-11">
-        <button mat-raised-button [color]="'accent'" (click)="createCourse()" cdkFocusInitial>CREATE</button>
-        <button mat-raised-button [color]="'primary'" (click)="closeDialog()">CLOSE</button>
+      <div class="col-md-10">
+        <button mat-button *ngIf="!data.course" (click)="createCourse()" [disabled]="courseForm.invalid"
+          cdkFocusInitial>CREATE</button>
+        <button mat-button *ngIf="data.course" (click)="editCourse()" [disabled]="courseForm.invalid" cdkFocusInitial>EDIT</button>
+        <button mat-button (click)="closeDialog()">CLOSE</button>
       </div>
-      <div class="col-md-1">
-        <button mat-raised-button [color]="'accent'" (click)="showAddTeacherDialog()">ADD TEACHER</button>
+      <div class="col-md-2">
+        <button mat-button (click)="showAddTeacherDialog()">ADD TEACHER</button>
       </div>
     </div>
   </div>
@@ -66,7 +69,7 @@
     <p>Please first add a teacher, then try again for adding a course.</p>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button [color]="'accent'" (click)="showAddTeacherDialog()" cdkFocusInitial>Add Teacher</button>
-    <button mat-raised-button [color]="'primary'" (click)="closeDialog()">CLOSE</button>
+    <button mat-button (click)="showAddTeacherDialog()" cdkFocusInitial>Add Teacher</button>
+    <button mat-button (click)="closeDialog()">CLOSE</button>
   </div>
 </ng-template>
