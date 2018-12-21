@@ -16,6 +16,8 @@ namespace SchoolWeb.Entities
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
         public virtual uint Age { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual IList<StudentGrade> StudentGrades { get; set; }
 
         public Student()

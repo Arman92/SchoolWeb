@@ -63,7 +63,7 @@ export class StudentGradeAddComponent implements OnInit {
   ngOnInit() {
     this.courseService.getCourses().subscribe(result => {
       console.log('courseService.getCourses()', result);
-      this.courses = result;
+      this.courses = result.result;
     });
 
     this.studentService.getStudents().subscribe(result => {

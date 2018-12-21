@@ -30,12 +30,12 @@ export class CourseListComponent implements OnInit {
   loadCourses() {
     this.courseService.getCourses().subscribe(result => {
       console.log('getCourses:', result);
-      this.courses = result;
+      this.courses = result.result;
     });
   }
 
 
-  onCourseRowClicked(row) {
+  onCourseRowClicked(row: any) {
     this.selectedRowIndex = row.id;
     this.selectedCourse = row as Course;
   }
@@ -80,7 +80,7 @@ export class CourseListComponent implements OnInit {
     });
   }
 
-  createStudent(course: Course) {
+  createStudent() {
     const dialogRef = this.dialog.open(StudentAddComponent, {
       width: '500px',
       data: {}

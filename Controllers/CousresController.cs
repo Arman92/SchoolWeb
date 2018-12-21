@@ -7,6 +7,7 @@ using NHibernate;
 using SchoolWeb.Database;
 using NHibernate.Linq;
 using SchoolWeb.Entities;
+using SchoolWeb.Helper;
 
 namespace SchoolWeb.Controllers
 {
@@ -28,7 +29,7 @@ namespace SchoolWeb.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            return Json(courses);
+            return Json(APIResult.New().WithSuccess().WithResult(courses));
         }
 
         [HttpGet("{id}")]
@@ -41,11 +42,11 @@ namespace SchoolWeb.Controllers
 
             if (course == null)
             {
-                return NoContent(); // Returns a 204 No Content response
+                return Json(APIResult.New().WithError("Course not found"));
             }
             else
             {
-                return Json(course);
+                return Json(APIResult.New().WithSuccess().WithResult(course));
             }
         }
 
@@ -64,18 +65,18 @@ namespace SchoolWeb.Controllers
                         await nhSession.SaveAsync(course);
                         await tr.CommitAsync();
 
-                        return CreatedAtAction("Post", course);
+                        return CreatedAtAction("Post", Json(APIResult.New().WithSuccess().WithResult(teacher)));
                     }
                     else
                     {
-                        return BadRequest("Teacher not found");
+                        return BadRequest(Json(APIResult.New().WithError("Teacher not found")));
                     }
 
                 }
             }
             else
             {
-                return BadRequest("Course name was not given");
+                return BadRequest(Json(APIResult.New().WithError("Course name was not given")));
             }
         }
 
@@ -89,7 +90,7 @@ namespace SchoolWeb.Controllers
 
             if (course != null && student != null)
             {
-                return BadRequest("Could not find Course or Student");
+                return BadRequest(Json(APIResult.New().WithError("Could not find Course or Student")));
             }
             else
             {
@@ -104,7 +105,7 @@ namespace SchoolWeb.Controllers
                     await nhSession.SaveAsync(studentGrade);
                     await tr.CommitAsync();
 
-                    return Ok(studentGrade);
+                    return Json(APIResult.New().WithSuccess().WithResult(studentGrade));
                 }
             }
 
@@ -120,7 +121,7 @@ namespace SchoolWeb.Controllers
 
             if (courseToEdit == null)
             {
-                return NotFound("Could not update course as it was not Found");
+                return NotFound(Json(APIResult.New().WithError("Could not update course as it was not Found")));
             }
             else
             {
@@ -133,7 +134,7 @@ namespace SchoolWeb.Controllers
                     await nhSession.SaveOrUpdateAsync(courseToEdit);
                     await tr.CommitAsync();
 
-                    return Json("Updated course");
+                    return Json(APIResult.New().WithSuccess().WithResult(courseToEdit));
                 }
             }
         }
@@ -148,7 +149,8 @@ namespace SchoolWeb.Controllers
 
             if (studentToDelete == null)
             {
-                return NotFound("Could not delete course as it was not Found");
+                return NotFound(Json(APIResult.New().WithError("Could not delete course as it was not Found")));
+
             }
             else
             {
@@ -157,7 +159,7 @@ namespace SchoolWeb.Controllers
                     await nhSession.DeleteAsync(studentToDelete);
                     await tr.CommitAsync();
 
-                    return Json("Deleted course");
+                    return Json(APIResult.New().WithSuccess().WithResult(true));
                 }
             }
         }
