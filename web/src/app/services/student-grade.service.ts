@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { throwError as observableThrowError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { StudentGrade } from '../models/studentGrade';
+import { APIResult } from '../common/api-result';
 
 @Injectable({
     providedIn: 'root'
@@ -13,34 +14,34 @@ export class StudentGradeService {
     constructor(@Inject(APP_CONFIG) private config: AppConfig, private http: HttpClient) {
     }
 
-    getStudentGrades(): Observable<StudentGrade[]> {
-        return this.http.get<StudentGrade[]>(`${this.config.apiEndpoint}/api/StudentGrades`)
+    getStudentGrades(): Observable<APIResult<StudentGrade[]>> {
+        return this.http.get<APIResult<StudentGrade[]>>(`${this.config.apiEndpoint}/api/StudentGrades`)
             .pipe(catchError(this.handleError));
     }
 
-    getStudentsGradesOfCourse(courseId: number): Observable<StudentGrade[]> {
-        return this.http.get<StudentGrade[]>(`${this.config.apiEndpoint}/api/StudentGrades/GetByCourse/` + courseId)
+    getStudentsGradesOfCourse(courseId: number): Observable<APIResult<StudentGrade[]>> {
+        return this.http.get<APIResult<StudentGrade[]>>(`${this.config.apiEndpoint}/api/StudentGrades/GetByCourse/` + courseId)
             .pipe(catchError(this.handleError));
     }
 
-    getStudentGrade(id: number): Observable<StudentGrade> {
-        return this.http.get<StudentGrade>(`${this.config.apiEndpoint}/api/StudentGrades/` + id)
+    getStudentGrade(id: number): Observable<APIResult<StudentGrade>> {
+        return this.http.get<APIResult<StudentGrade>>(`${this.config.apiEndpoint}/api/StudentGrades/` + id)
             .pipe(catchError(this.handleError));
     }
 
-    deleteStudentGrade(student: StudentGrade) {
-        return this.http.delete<StudentGrade>(`${this.config.apiEndpoint}/api/StudentGrades/`
+    deleteStudentGrade(student: StudentGrade): Observable<APIResult<Boolean>> {
+        return this.http.delete<APIResult<Boolean>>(`${this.config.apiEndpoint}/api/StudentGrades/`
             + student.course.id + '/' + student.student.id)
             .pipe(catchError(this.handleError));
     }
 
-    updateStudentGrade(student: StudentGrade) {
-        return this.http.put<StudentGrade>(`${this.config.apiEndpoint}/api/StudentGrades/`, student)
+    updateStudentGrade(student: StudentGrade): Observable<APIResult<StudentGrade>> {
+        return this.http.put<APIResult<StudentGrade>>(`${this.config.apiEndpoint}/api/StudentGrades/`, student)
             .pipe(catchError(this.handleError));
     }
 
-    addStudentGrade(student: StudentGrade) {
-        return this.http.post<StudentGrade>(`${this.config.apiEndpoint}/api/StudentGrades/` +
+    addStudentGrade(student: StudentGrade): Observable<APIResult<StudentGrade>> {
+        return this.http.post<APIResult<StudentGrade>>(`${this.config.apiEndpoint}/api/StudentGrades/` +
             student.course.id + '/' + student.student.id, student.grade)
             .pipe(catchError(this.handleError));
     }
