@@ -6,6 +6,6 @@ export interface Course {
     id: number;
     name: string;
     location: string;
-    teacher: Teacher;
-    students: Student[];
+    teacher?: Teacher;
+    students?: Student[];
 }

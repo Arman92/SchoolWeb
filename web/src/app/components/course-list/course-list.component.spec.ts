@@ -7,6 +7,17 @@ import { YesNoDialogComponent } from 'src/app/common/yes-no-dialog/yes-no-dialog
 import { CourseAddComponent } from '../course-add/course-add.component';
 import { StudentAddComponent } from '../student-add/student-add.component';
 import { CourseService } from 'src/app/services/course.service';
+import { DemoMaterialModule } from 'src/app/common/material.module';
+import { StudentListComponent } from '../student-list/student-list.component';
+import { CourseMockService } from 'src/app/services/mock/course.mock';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { APP_CONFIG, APP_DI_CONFIG } from 'src/app/config/app-config.module';
+import { TeacherService } from 'src/app/services/teacher.service';
+import { TeacherMockService } from 'src/app/services/mock/teacher.mock';
+import { StudentGradeService } from 'src/app/services/student-grade.service';
+import { StudentGradeMockService } from 'src/app/services/mock/student-grade.mock';
+import { StudentMockService } from 'src/app/services/mock/student.mock';
+import { StudentService } from 'src/app/services/student.service';
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
@@ -17,13 +28,24 @@ describe('CourseListComponent', () => {
       declarations: [
         CourseListComponent,
         StudentAddComponent,
+        StudentListComponent,
         StudentGradeListComponent,
         StudentGradeAddComponent,
         YesNoDialogComponent,
         CourseAddComponent
       ],
+      imports: [
+        DemoMaterialModule,
+        ReactiveFormsModule,
+        FormsModule,
+      ],
       providers: [
-        { provide: CourseService }
+        { provide: APP_CONFIG, useValue: APP_DI_CONFIG },
+        { provide: CourseService, useClass: CourseMockService },
+        { provide: TeacherService, useClass: TeacherMockService },
+        { provide: StudentGradeService, useClass: StudentGradeMockService },
+        { provide: StudentService, useClass: StudentMockService },
+
       ]
     })
       .compileComponents();

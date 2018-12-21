@@ -25,7 +25,7 @@ export class StudentGradeListComponent implements OnInit {
     if (this._course) {
       this.studentGradeService.getStudentsGradesOfCourse(this.course.id).subscribe(result => {
         console.log('getStudentsGradesOfCourse:', result);
-        this.studentGrades = result;
+        this.studentGrades = result.result;
       });
     }
   }

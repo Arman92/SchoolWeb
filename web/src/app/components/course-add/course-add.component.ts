@@ -63,7 +63,7 @@ export class CourseAddComponent implements OnInit {
 
   loadTeachers() {
     this.teacherService.getTeachers().subscribe(result => {
-      this.teachers = result;
+      this.teachers = result.result;
     }, err => {
       console.log('Got an error getting teachers', err);
     });
@@ -109,7 +109,7 @@ export class CourseAddComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.teacherService.getTeachers().subscribe(res => {
-        this.teachers = res;
+        this.teachers = res.result;
       }, err => {
         console.log('Got an error getting teachers', err);
       });

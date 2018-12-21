@@ -29,7 +29,7 @@ namespace SchoolWeb.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            return Ok(Json(APIResult.New().WithSuccess().WithResult(students));
+            return Ok(Json(APIResult.New().WithSuccess().WithResult(students)));
         }
 
         [HttpGet]
@@ -108,7 +108,7 @@ namespace SchoolWeb.Controllers
 
             if (studentToDelete == null)
             {
-                return NotFound(Json(APIResult.New().WithError("Could not delete student as it was not Found"));
+                return NotFound(Json(APIResult.New().WithError("Could not delete student as it was not Found")));
             }
             else
             {

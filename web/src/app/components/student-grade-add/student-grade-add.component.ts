@@ -68,7 +68,7 @@ export class StudentGradeAddComponent implements OnInit {
 
     this.studentService.getStudents().subscribe(result => {
       console.log('studentService.getStudents()', result);
-      this.students = result;
+      this.students = result.result;
     });
   }
 

@@ -38,9 +38,9 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule,
+    MatTreeModule
 } from '@angular/material';
-import { YesNoDialogComponent } from './yes-no-dialog/yes-no-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     exports: [
@@ -83,6 +83,7 @@ import { YesNoDialogComponent } from './yes-no-dialog/yes-no-dialog.component';
         MatTooltipModule,
         MatTreeModule,
         ScrollingModule,
+        BrowserAnimationsModule
     ],
     declarations: []
 })

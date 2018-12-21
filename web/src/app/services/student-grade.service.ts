@@ -24,11 +24,6 @@ export class StudentGradeService {
             .pipe(catchError(this.handleError));
     }
 
-    getStudentGrade(id: number): Observable<APIResult<StudentGrade>> {
-        return this.http.get<APIResult<StudentGrade>>(`${this.config.apiEndpoint}/api/StudentGrades/` + id)
-            .pipe(catchError(this.handleError));
-    }
-
     deleteStudentGrade(student: StudentGrade): Observable<APIResult<Boolean>> {
         return this.http.delete<APIResult<Boolean>>(`${this.config.apiEndpoint}/api/StudentGrades/`
             + student.course.id + '/' + student.student.id)

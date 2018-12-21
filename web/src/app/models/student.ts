@@ -5,5 +5,5 @@ export interface Student {
     firstName: string;
     lastName: string;
     age: number;
-    courses: Course[];
+    courses?: Course[];
 }
