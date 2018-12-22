@@ -7,6 +7,7 @@ import { TeacherMockService } from 'src/app/services/mock/teacher.mock';
 import { TeacherService } from 'src/app/services/teacher.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatDialogRefMock } from 'src/app/common/mat-dialog-mock';
 
 describe('TeacherAddComponent', () => {
   let component: TeacherAddComponent;
@@ -21,7 +22,7 @@ describe('TeacherAddComponent', () => {
         FormsModule
       ],
       providers: [
-        { provide: MatDialogRef, useValue: {} },
+        { provide: MatDialogRef, useClass: MatDialogRefMock },
         { provide: MAT_DIALOG_DATA, useValue: [] },
         { provide: APP_CONFIG, useValue: APP_DI_CONFIG },
         { provide: TeacherService, useClass: TeacherMockService },
