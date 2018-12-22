@@ -29,7 +29,7 @@ namespace SchoolWeb.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            return Ok(Json(APIResult.New().WithSuccess().WithResult(students)));
+            return Json(APIResult.New().WithSuccess().WithResult(students));
         }
 
         [HttpGet("{id}")]
@@ -46,7 +46,7 @@ namespace SchoolWeb.Controllers
             }
             else
             {
-                return Ok(Json(APIResult.New().WithSuccess().WithResult(student)));
+                return Json(APIResult.New().WithSuccess().WithResult(student));
             }
         }
 
@@ -61,7 +61,7 @@ namespace SchoolWeb.Controllers
                     await nhSession.SaveAsync(student);
                     await tr.CommitAsync();
 
-                    return Ok(Json(APIResult.New().WithSuccess().WithResult(student)));
+                    return Json(APIResult.New().WithSuccess().WithResult(student));
                 }
             }
             else
@@ -92,7 +92,7 @@ namespace SchoolWeb.Controllers
                     await nhSession.SaveOrUpdateAsync(studentToEdit);
                     await tr.CommitAsync();
 
-                    return Ok(Json(APIResult.New().WithSuccess().WithResult(studentToEdit)));
+                    return Json(APIResult.New().WithSuccess().WithResult(studentToEdit));
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace SchoolWeb.Controllers
                     await nhSession.DeleteAsync(studentToDelete);
                     await tr.CommitAsync();
 
-                    return Ok(Json(APIResult.New().WithSuccess().WithResult(true)));
+                    return Json(APIResult.New().WithSuccess().WithResult(true));
                 }
             }
         }
