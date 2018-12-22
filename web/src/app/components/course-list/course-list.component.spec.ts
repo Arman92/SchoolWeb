@@ -18,6 +18,8 @@ import { StudentGradeService } from 'src/app/services/student-grade.service';
 import { StudentGradeMockService } from 'src/app/services/mock/student-grade.mock';
 import { StudentMockService } from 'src/app/services/mock/student.mock';
 import { StudentService } from 'src/app/services/student.service';
+import { MatDialog } from '@angular/material';
+import { MatDialogMock } from '../../common/mat-dialog-mock';
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
@@ -45,6 +47,10 @@ describe('CourseListComponent', () => {
         { provide: TeacherService, useClass: TeacherMockService },
         { provide: StudentGradeService, useClass: StudentGradeMockService },
         { provide: StudentService, useClass: StudentMockService },
+        {
+          // When the component asks for the MatDialog service, we we’ll provide the MatDialogMock one.
+          provide: MatDialog, useClass: MatDialogMock,
+        }
 
       ]
     })

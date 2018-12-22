@@ -77,11 +77,14 @@ export class CourseAddComponent implements OnInit {
       location: this.locationFormControl.value,
       name: this.nameFormControl.value,
       teacher: { id: this.teacherFormControl.value, firstName: '', lastName: '' },
-      students: []
     };
 
-    this.courseService.addCourse(course).subscribe(result => {
-      this.dialogRef.close();
+    this.courseService.addCourse(course).subscribe((result) => {
+      if (result.success) {
+        this.dialogRef.close();
+      } else {
+        this.hasError = result.errorMessage;
+      }
     }, err => {
       this.hasError = err;
     });

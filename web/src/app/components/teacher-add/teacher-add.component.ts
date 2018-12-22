@@ -1,9 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { DialogData } from '../course-add/course-add.component';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TeacherService } from 'src/app/services/teacher.service';
 import { Teacher } from 'src/app/models/teacher';
+
+export interface DialogData {
+  teacher: Teacher;
+}
 
 @Component({
   selector: 'app-teacher-add',
@@ -11,16 +14,9 @@ import { Teacher } from 'src/app/models/teacher';
   styleUrls: ['./teacher-add.component.scss']
 })
 export class TeacherAddComponent implements OnInit {
-  firstNameFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(3),
-  ]);
-
-  lastNameFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(3),
-  ]);
-
+  teacherForm: FormGroup;
+  firstNameFormControl: FormControl;
+  lastNameFormControl: FormControl;
   hasError: any;
 
   constructor(
@@ -29,6 +25,20 @@ export class TeacherAddComponent implements OnInit {
     private teacherService: TeacherService
   ) {
 
+    this.firstNameFormControl = new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]);
+
+    this.lastNameFormControl = new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]);
+
+    this.teacherForm = new FormGroup({
+      firstName: this.firstNameFormControl,
+      lastName: this.lastNameFormControl,
+    });
   }
 
   ngOnInit() {

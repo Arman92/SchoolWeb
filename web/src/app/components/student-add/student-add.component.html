@@ -33,6 +33,12 @@
         <mat-error *ngIf="ageFormControl.hasError('required')">
           Age is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="ageFormControl.hasError('min')">
+          Age should be greater than <strong>5</strong>
+        </mat-error>
+        <mat-error *ngIf="ageFormControl.hasError('max')">
+          Age should be less than <strong>99</strong>
+        </mat-error>
       </mat-form-field>
 
 

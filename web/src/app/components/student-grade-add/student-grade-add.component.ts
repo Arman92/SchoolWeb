@@ -50,6 +50,8 @@ export class StudentGradeAddComponent implements OnInit {
 
     this.gradeFormControl = new FormControl(data.grade ? data.grade : '', [
       Validators.required,
+      Validators.min(0),
+      Validators.max(100),
     ]);
 
     this.studentGradeForm = new FormGroup({

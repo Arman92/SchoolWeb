@@ -42,6 +42,8 @@ export class StudentAddComponent implements OnInit {
 
     this.ageFormControl = new FormControl(data.student ? data.student.age : '', [
       Validators.required,
+      Validators.min(5),
+      Validators.max(99)
     ]);
 
     this.studentForm = new FormGroup({
@@ -58,7 +60,7 @@ export class StudentAddComponent implements OnInit {
 
   createStudent() {
     this.hasError = null;
-    console.log('this.ageFormControl.value ', this.ageFormControl.value, 3);
+    console.log('this.ageFormControl.value ', this.ageFormControl.value);
 
     const student: Student = {
       id: 0,
@@ -77,7 +79,7 @@ export class StudentAddComponent implements OnInit {
 
   editStudent() {
     this.hasError = null;
-    console.log('this.ageFormControl.value ', this.ageFormControl.value, 3);
+    console.log('this.ageFormControl.value ', this.ageFormControl.value);
 
     this.data.student.firstName = this.firstNameFormControl.value;
     this.data.student.lastName = this.lastNameFormControl.value;
